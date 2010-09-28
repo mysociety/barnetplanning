@@ -4,7 +4,8 @@ $(function(){
         var map = new OpenLayers.Map('map');
         var osLayer = new OpenLayers.Layer.OSM('OS StreetView', 'http://os.openstreetmap.org/sv/${z}/${x}/${y}.png', {
             minZoomLevel: 9,
-            numZoomLevels: 8
+            maxZoomLevel: 16,
+            numZoomLevels: null
         });
         polygonLayer = new OpenLayers.Layer.Vector('Polygon Layer');
         map.addLayers([osLayer, polygonLayer]);
