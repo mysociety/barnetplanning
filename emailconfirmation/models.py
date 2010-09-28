@@ -28,10 +28,9 @@ class EmailConfirmation(models.Model):
                 'email': self.content_object.email,
                 'id': int_to_base32(self.content_object.id),
                 'token': self.make_token(random.randint(0,32767)),
-            }, email
+            }, self.content_object.email
         )
         self.save()
-        return self._make_token_with_timestamp(user, self._num_days(self._today()))
 
     def check_token(self, token):
         try:
