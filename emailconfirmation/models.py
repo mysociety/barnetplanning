@@ -5,12 +5,12 @@ from django.contrib.auth.tokens import default_token_generator
 from utils import int_to_base32
 
 class EmailConfirmationManager(models.Manager):
-    def validate(self, request, object):
+    def confirm(self, request, object):
         conf = EmailConfirmation(content_object=object)
         conf.send_email(request)
 
 class EmailConfirmation(models.Model):
-    validated = models.BooleanField(default=False)
+    confirmed = models.BooleanField(default=False)
     content_type = models.ForeignKey(ContentType)
     object_id = models.PositiveIntegerField()
     content_object = generic.GenericForeignKey('content_type', 'object_id')
@@ -18,7 +18,7 @@ class EmailConfirmation(models.Model):
     manager = EmailConfirmationManager()
 
     def __unicode__(self):
-        return 'Validation of %s, %s' % (self.content_object.email, self.validated)
+        return 'Confirming of %s, %s' % (self.content_object.email, self.confirmed)
 
     def send_email(self, request):
         send_email(request, "Alert confirmation",
@@ -29,4 +29,5 @@ class EmailConfirmation(models.Model):
                 'token': default_token_generator.make_token(self.content_object),
             }, email
         )
+        self.save()
 

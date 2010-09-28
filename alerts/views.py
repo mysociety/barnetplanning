@@ -6,8 +6,9 @@
 from django.contrib.auth.tokens import default_token_generator
 from django.shortcuts import get_object_or_404
 
+from emailconfirmation.models import EmailConfirmation
+
 from forms import AlertForm
-from models import Alert
 from utils import render
 
 def home(request):
@@ -15,7 +16,7 @@ def home(request):
     if request.method == 'POST':
         if form.is_valid():
             alert = form.save()
-            send_confirmation_email(request, alert)
+            EmailConfirmation.objects.confirm(request, alert)
             return render(request, 'check-email.html')
-    return render(request, 'register.html', { 'form': form })
+    return render(request, 'home.html', { 'form': form })
 

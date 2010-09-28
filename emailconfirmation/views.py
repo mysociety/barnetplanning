@@ -11,9 +11,9 @@ def check_token(request, id, token):
 
     confirmation = get_object_or_404(EmailConfirmation, id=id)
     if default_token_generator.check_token(confirmation, token):
-        confirmation.validated = True
+        confirmation.confirmed = True
         confirmation.save()
-        return render(request, 'registration/validated.html', {
+        return render(request, 'registration/confirmed.html', {
             'user': user,
         })
     return HttpResponseRedirect('/')
