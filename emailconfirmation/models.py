@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.contrib.auth.tokens import default_token_generator
-from utils import int_to_base32
+from utils import int_to_base32, send_email
 
 class EmailConfirmationManager(models.Manager):
     def confirm(self, request, object):
