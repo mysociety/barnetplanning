@@ -10,7 +10,7 @@ def check_token(request, id, token):
         raise Http404
 
     confirmation = get_object_or_404(EmailConfirmation, id=id)
-    if default_token_generator.check_token(confirmation, token):
+    if confirmation.check_token(token):
         confirmation.confirmed = True
         confirmation.save()
         return render(request, 'registration/confirmed.html', {
