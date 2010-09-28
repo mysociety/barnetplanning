@@ -12,13 +12,14 @@ class MyUKPostcodeField(UKPostcodeField):
     }
 
 class AlertForm(forms.ModelForm):
+    email = forms.EmailField(error_messages={'required': 'Please enter your email address.'})
     postcode = MyUKPostcodeField(error_messages = {
         'required': 'Please enter your postcode',
     })
 
     def __init__(self, *args, **kwargs):
         super(AlertForm, self).__init__(*args, **kwargs)
-        self.fields['radius'].widget = forms.RadioSelect()
+        self.fields['radius'].widget = forms.RadioSelect(choices=self.fields['radius'].choices)
 
     class Meta:
         model = Alert
