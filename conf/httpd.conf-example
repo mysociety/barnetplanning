@@ -1,0 +1,15 @@
+# Apache configuration.
+#
+# For development ignore this, you can just run python manage.py runserver as for any
+# Django application.
+#
+# Copyright (c) 2010 UK Citizens Online Democracy. All rights reserved.
+# Email: matthew@mysociety.org; WWW: http://www.mysociety.org
+
+WSGIDaemonProcess barnetplanning user=user group=group processes=5 threads=1 display-name=barnetplanning
+WSGIProcessGroup barnetplanning
+
+WSGIScriptAlias / /data/vhost/example.org/docs/django.wsgi
+
+Alias /media /var/lib/python-support/python2.5/django/contrib/admin/media
+Alias /static /data/vhost/example.org/docs/static
