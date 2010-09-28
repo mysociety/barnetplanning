@@ -16,5 +16,10 @@ class AlertForm(forms.ModelForm):
         'required': 'Please enter your postcode',
     })
 
+    def __init__(self, *args, **kwargs):
+        super(AlertForm, self).__init__(self, *args, **kwargs)
+        self.fields['radius'].widget = forms.widget.RadioSelect()
+
     class Meta:
         model = Alert
+        exclude = ('location',)

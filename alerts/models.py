@@ -4,7 +4,11 @@ class Alert(models.Model):
     email = models.EmailField()
     postcode = models.CharField(max_length=8)
     location = models.PointField(null=True)
-    radius = models.IntegerField()
+    radius = models.IntegerField(default=800, choices=(
+        (183, 'about 200 yards / 180m'),
+        (800, 'about half a mile / 800m'),
+        (1600, 'about a mile / 1.6km'),
+    ))
 
     objects = models.GeoManager()
 

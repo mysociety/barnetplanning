@@ -5,17 +5,21 @@
 
 from django.contrib.auth.tokens import default_token_generator
 from django.shortcuts import get_object_or_404
+from django.contrib.gis.geos import Point
 
 from emailconfirmation.models import EmailConfirmation
 
 from forms import AlertForm
-from utils import render
+from utils import render, postcode_lookup
 
 def home(request):
     form = AlertForm(request.POST or None)
     if request.method == 'POST':
         if form.is_valid():
-            alert = form.save()
+            alert = form.save(commit=False)
+            location = postcode_lookup(alert.postcode)
+            alert.location = Point(location['wgs84_lon'], location['wgs84_lat'])
+            alert.save()
             EmailConfirmation.objects.confirm(request, alert, 'alert-confirmed')
             return render(request, 'check-email.html')
     return render(request, 'home.html', { 'form': form })
