@@ -4,7 +4,7 @@ $(function(){
         var map = new OpenLayers.Map('map');
         var osLayer = new OpenLayers.Layer.OSM('OS StreetView', 'http://os.openstreetmap.org/sv/${z}/${x}/${y}.png', {
             minZoomLevel: 9,
-            maxZoomLevel: 16
+            numZoomLevels: 8
         });
         polygonLayer = new OpenLayers.Layer.Vector('Polygon Layer');
         map.addLayers([osLayer, polygonLayer]);
@@ -26,15 +26,21 @@ $(function(){
     });
 
     $("input[name='radius']").click(function(){
-        var center = map.getCenter();
-        createCircle(center.lon, center.lat, $(this).val());
+        var radius = $(this).val();
+        createCircle(map.center.lon, map.center.lat, radius);
+        if (radius>1000 && map.zoom > 14) {
+            map.zoomTo(14);
+        }
+        if (radius<500 && map.zoom < 15) {
+            map.zoomTo(15);
+        }
     });
 
 });
 
 function createCircle(x, y, radius) {
     var point = new OpenLayers.Geometry.Point(x, y);
-    var circle = OpenLayers.Geometry.Polygon.createRegularPolygon(point, radius, 20);
+    var circle = OpenLayers.Geometry.Polygon.createRegularPolygon(point, radius, 50);
     var feature = new OpenLayers.Feature.Vector(circle);
     polygonLayer.removeAllFeatures();
     polygonLayer.addFeatures([feature]);
