@@ -22,6 +22,7 @@ SERVER_EMAIL = mysociety.config.get('BUGS_EMAIL')
 ADMINS = (
     ('mySociety bugs', mysociety.config.get('BUGS_EMAIL')),
 )
+DEFAULT_FROM_EMAIL = mysociety.config.get('BUGS_EMAIL')
 
 MANAGERS = ADMINS
 
