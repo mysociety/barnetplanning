@@ -1,7 +1,7 @@
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from models import EmailConfirmation
-from utils import base32_to_int, render
+from utils import base32_to_int
 
 def check_token(request, id, token):
     try:
