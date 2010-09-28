@@ -28,7 +28,7 @@ class EmailConfirmation(models.Model):
         send_email(request, "Alert confirmation",
             'emailconfirmation/email.txt',
             {
-                'email': self.content_object.email,
+                'object': self.content_object,
                 'id': int_to_base32(self.id),
                 'token': self.make_token(random.randint(0,32767)),
             }, self.content_object.email
