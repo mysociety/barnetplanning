@@ -16,7 +16,10 @@ def home(request):
     if request.method == 'POST':
         if form.is_valid():
             alert = form.save()
-            EmailConfirmation.objects.confirm(request, alert)
+            EmailConfirmation.objects.confirm(request, alert, 'alert-confirmed')
             return render(request, 'check-email.html')
     return render(request, 'home.html', { 'form': form })
 
+def confirmed(request, id):
+    return render(request, 'confirmed.html')
+    

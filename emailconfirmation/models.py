@@ -3,11 +3,12 @@ from django.db import models
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
+from django.core.urlresolvers import reverse
 from utils import int_to_base32, base32_to_int, send_email
 
 class EmailConfirmationManager(models.Manager):
-    def confirm(self, request, object):
-        conf = EmailConfirmation(content_object=object)
+    def confirm(self, request, object, page_after):
+        conf = EmailConfirmation(content_object=object, page_after=page_after)
         conf.send_email(request)
 
 class EmailConfirmation(models.Model):
@@ -15,6 +16,7 @@ class EmailConfirmation(models.Model):
     content_type = models.ForeignKey(ContentType)
     object_id = models.PositiveIntegerField()
     content_object = generic.GenericForeignKey('content_type', 'object_id')
+    page_after = models.CharField(max_length=100)
 
     objects = EmailConfirmationManager()
 
@@ -22,15 +24,19 @@ class EmailConfirmation(models.Model):
         return 'Confirming of %s, %s' % (self.content_object.email, self.confirmed)
 
     def send_email(self, request):
+        self.save()
         send_email(request, "Alert confirmation",
             'emailconfirmation/email.txt',
             {
                 'email': self.content_object.email,
-                'id': int_to_base32(self.content_object.id),
+                'id': int_to_base32(self.id),
                 'token': self.make_token(random.randint(0,32767)),
             }, self.content_object.email
         )
-        self.save()
+
+    @models.permalink
+    def url_after(self):
+        return (self.page_after, [ self.content_object.id ])
 
     def check_token(self, token):
         try:

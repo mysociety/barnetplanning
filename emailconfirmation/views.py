@@ -1,7 +1,7 @@
-from django.http import Http404
+from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from models import EmailConfirmation
-from utils import base32_to_int
+from utils import base32_to_int, render
 
 def check_token(request, id, token):
     try:
@@ -13,8 +13,6 @@ def check_token(request, id, token):
     if confirmation.check_token(token):
         confirmation.confirmed = True
         confirmation.save()
-        return render(request, 'registration/confirmed.html', {
-            'user': user,
-        })
+        return HttpResponseRedirect(confirmation.url_after())
     return HttpResponseRedirect('/')
 
