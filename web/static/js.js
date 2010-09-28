@@ -7,7 +7,7 @@ $(function(){
             maxZoomLevel: 16
         });
         polygonLayer = new OpenLayers.Layer.Vector('Polygon Layer');
-        map.addLayer([osLayer, polygonLayer]);
+        map.addLayers([osLayer, polygonLayer]);
         map.setCenter(new OpenLayers.LonLat(-0.2005, 51.652963).transform(
             new OpenLayers.Projection("EPSG:4326"),
             new OpenLayers.Projection("EPSG:900913")
