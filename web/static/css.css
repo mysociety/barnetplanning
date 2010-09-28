@@ -1,3 +1,7 @@
 .errorlist {
     color: #990000;
 }
+
+#map {
+    float: right;
+}
