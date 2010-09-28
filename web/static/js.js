@@ -24,15 +24,15 @@ $(function(){
         });
     });
 
-    $("input[@name='radius']").click(function(){
+    $("input[name='radius']").click(function(){
         var center = map.getCenter();
-        createCircle(center.lat, center.lon, $(this).val());
+        createCircle(center.lon, center.lat, $(this).val());
     });
 
 });
 
-function createCircle(lat, lon, radius) {
-    var point = new OpenLayers.Geometry.Point(lat, lon);
+function createCircle(x, y, radius) {
+    var point = new OpenLayers.Geometry.Point(x, y);
     var circle = OpenLayers.Geometry.Polygon.createRegularPolygon(point, radius, 20);
     var feature = new OpenLayers.Feature.Vector(circle);
     polygonLayer.removeAllFeatures();
