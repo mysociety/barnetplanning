@@ -21,6 +21,7 @@ $(function(){
                 new OpenLayers.Projection("EPSG:4326"),
                 new OpenLayers.Projection("EPSG:900913")
             ), 15);
+            $("input[name='radius']:checked").click();
         });
     });
 
