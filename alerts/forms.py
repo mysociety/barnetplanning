@@ -17,7 +17,7 @@ class AlertForm(forms.ModelForm):
     })
 
     def __init__(self, *args, **kwargs):
-        super(AlertForm, self).__init__(self, *args, **kwargs)
+        super(AlertForm, self).__init__(*args, **kwargs)
         self.fields['radius'].widget = forms.RadioSelect()
 
     class Meta:
