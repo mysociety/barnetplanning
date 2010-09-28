@@ -8,17 +8,18 @@ from models import Alert
 # So remove this extra class when we have a recent enough Django.
 class MyUKPostcodeField(UKPostcodeField):
     default_error_messages = {
+        'required': 'Please enter your postcode',
         'invalid': 'We need your complete UK postcode.'
     }
+    widget = forms.TextInput(attrs={'size':'8'})
 
 class AlertForm(forms.ModelForm):
-    email = forms.EmailField(error_messages={'required': 'Please enter your email address.'})
-    postcode = MyUKPostcodeField(error_messages = {
-        'required': 'Please enter your postcode',
-    })
+    email = forms.EmailField(label='Your email address', error_messages={'required': 'Please enter your email address.'})
+    postcode = MyUKPostcodeField()
 
     def __init__(self, *args, **kwargs):
         super(AlertForm, self).__init__(*args, **kwargs)
+        self.fields['radius'].label = 'How far around your postcode would you like to receive alerts for?'
         self.fields['radius'].widget = forms.RadioSelect(choices=self.fields['radius'].choices)
 
     class Meta:
