@@ -1,12 +1,11 @@
 from django.contrib.gis.db import models
-from mapit.managers import GeoManager
 
 class Alert(models.Model):
     email = models.EmailField()
     location = models.PointField(null=True)
     radius = models.IntegerField()
 
-    objects = GeoManager()
+    objects = models.GeoManager()
 
     class Meta:
         ordering = ('email',)
