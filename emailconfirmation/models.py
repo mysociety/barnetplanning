@@ -1,5 +1,6 @@
 import random, hmac, hashlib
 from django.db import models
+from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from utils import int_to_base32, base32_to_int, send_email
