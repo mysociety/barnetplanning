@@ -15,7 +15,7 @@ class EmailConfirmation(models.Model):
     object_id = models.PositiveIntegerField()
     content_object = generic.GenericForeignKey('content_type', 'object_id')
 
-    manager = EmailConfirmationManager()
+    objects = EmailConfirmationManager()
 
     def __unicode__(self):
         return 'Confirming of %s, %s' % (self.content_object.email, self.confirmed)
