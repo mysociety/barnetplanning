@@ -2,11 +2,12 @@ $(function(){
 
     if ($('#map').length) {
         var map = new OpenLayers.Map('map');
-        var layer = new OpenLayers.Layer.OSM('OS StreetView', 'http://os.openstreetmap.org/sv/${z}/${x}/${y}.png', {
-            minZoomLevel: 6,
-            maxZoomLevel: 18
+        var osLayer = new OpenLayers.Layer.OSM('OS StreetView', 'http://os.openstreetmap.org/sv/${z}/${x}/${y}.png', {
+            minZoomLevel: 9,
+            maxZoomLevel: 16
         });
-        map.addLayer(layer);
+        polygonLayer = new OpenLayers.Layer.Vector('Polygon Layer');
+        map.addLayer([osLayer, polygonLayer]);
         map.setCenter(new OpenLayers.LonLat(-0.2005, 51.652963).transform(
             new OpenLayers.Projection("EPSG:4326"),
             new OpenLayers.Projection("EPSG:900913")
@@ -24,6 +25,17 @@ $(function(){
     });
 
     $("input[@name='radius']").click(function(){
+        var center = map.getCenter();
+        createCircle(center.lat, center.lon, $(this).val());
     });
 
 });
+
+function createCircle(lat, lon, radius) {
+    var point = new OpenLayers.Geometry.Point(lat, lon);
+    var circle = OpenLayers.Geometry.Polygon.createRegularPolygon(point, radius, 20);
+    var feature = new OpenLayers.Feature.Vector(circle);
+    polygonLayer.removeAllFeatures();
+    polygonLayer.addFeatures([feature]);
+}
+
