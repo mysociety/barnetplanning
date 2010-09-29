@@ -5,3 +5,7 @@
 #map {
     float: right;
 }
+
+#map div.olControlAttribution {
+    bottom: 0.5em;
+}
