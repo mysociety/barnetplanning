@@ -4,6 +4,7 @@
 
 #map {
     float: right;
+    border: solid 1px #999999;
 }
 
 #map div.olControlAttribution {
