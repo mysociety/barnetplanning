@@ -19,6 +19,10 @@ $(function(){
     $('#id_postcode').change(function(){
         var val = $(this).val();
         $.getJSON('http://mapit.mysociety.org/postcode/' + encodeURIComponent(val) + '?callback=?',  function(data){
+            if (data['shortcuts']['council'] != 2489) {
+                $('#id_postcode').parent().before("<ul class='errorlist'><li>That postcode doesn't appear to be within Barnet, sorry.</li></ul>");
+                return;
+            }
             map.setCenter(new OpenLayers.LonLat(data['wgs84_lon'], data['wgs84_lat']).transform(
                 new OpenLayers.Projection("EPSG:4326"),
                 new OpenLayers.Projection("EPSG:900913")
