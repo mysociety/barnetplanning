@@ -1,0 +1,22 @@
+#!/usr/bin/env python
+
+import os, sys, datetime
+
+file_dir = os.path.abspath(os.path.realpath(os.path.dirname(__file__)))
+sys.path.append(os.path.normpath(file_dir + "/.."))
+os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
+
+from django.contrib.gis.geos import Point
+from django.utils import simplejson
+from applications.models import Application
+from utils import postcode_lookup
+
+date = datetime.date.today() - datetime.timedelta(days=1)
+
+fp = open(sys.path[0] + '/../data/apps-%s' % date)
+applications = simplejson.load(fp)
+for app in applications:
+    location = postcode_lookup(app['postcode'])
+    app['location'] = Point(location['wgs84_lon'], location['wgs84_lat'])
+    ref = app.pop('council_reference')
+    Application.objects.get_or_create(council_reference = ref, defaults = app)
