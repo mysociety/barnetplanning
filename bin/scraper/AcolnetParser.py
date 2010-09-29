@@ -138,7 +138,7 @@ class AcolnetParser:
         return search_form_response
         
 
-    def getResultsByDateRange(date_from, date_to):
+    def getResultsByDateRange(self, date_from, date_to):
         # first we fetch the search page to get ourselves some session info...
         search_form_response = self._getSearchResponse()
         
