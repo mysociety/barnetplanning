@@ -1,0 +1,30 @@
+#!/usr/bin/env python
+#
+# GPLv2.
+
+import sys
+import datetime
+import simplejson
+from scraper import AcolnetParser
+
+parser = AcolnetParser.AcolnetParser('', '',
+    "http://planningcases.barnet.gov.uk/planning-cases/acolnetcgi.exe?ACTION=UNWRAP&RIPNAME=Root.pgesearch"
+)
+
+date = datetime.date.today() - datetime.timedelta(days=1)
+results = parser.getResultsByDayMonthYear(date.day, date.month, date.year)
+
+out = []
+for app in results.planning_applications:
+    out.append({
+        'council_reference': app.council_reference,
+        'address': app.address,
+        'postcode': app.postcode,
+        'description': app.description,
+        'info_url': app.info_url,
+        'received': app.date_received.isoformat(),
+    })
+
+fp = open(sys.path[0] + '/../data/apps-%s' % date, 'w')
+simplejson.dump(out, fp)
+
