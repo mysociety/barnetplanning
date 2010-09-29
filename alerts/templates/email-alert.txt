@@ -1,15 +1,12 @@
 {% for application in applications %}
+    {{ application.address|safe }} ({{ application.council_reference|safe }})
 
-    {{ application.address }} ({{ application.council_reference }})
+    {{ application.description|safe }}
 
-    {{ application.description }}
-
-    More information: {{ application.info_url }}
+    More information: {{ application.info_url|safe }}
 
     =============================
-
 {% endfor %}
-
     ------------------------------------------------------------
 
     To stop receiving these emails follow this link:
