@@ -45,6 +45,9 @@ $(function(){
             }
         });
     });
+    if ($('#id_postcode').val()) {
+        $('#id_postcode').change();
+    }
 
     $("input[name='radius']").click(function(){
         var radius = $(this).val();
@@ -57,6 +60,18 @@ $(function(){
         }
     });
 
+    $('#alert_form').submit(function(){
+        var go = true;
+        if (!$('#id_email').val()) {
+            show_error('#id_email', 'Please enter your email address.');
+            go = false;
+        }
+        if (!$('#id_postcode').val()) {
+            show_error('#id_postcode', 'Please enter a postcode.');
+            go = false;
+        }
+        return go;
+    });
 });
 
 function createCircle(x, y, radius) {
