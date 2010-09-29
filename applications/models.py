@@ -10,6 +10,8 @@ class Application(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     received = models.DateField()
 
+    objects = models.GeoManager()
+
     def __unicode__(self):
         return 'Planning application for %s (ref %s), made %s' % (self.address, self.council_reference, self.received)
 
