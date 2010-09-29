@@ -138,7 +138,7 @@ class AcolnetParser:
         return search_form_response
         
 
-    def getResultsByDayMonthYear(self, day, month, year):
+    def getResultsByDateRange(date_from, date_to):
         # first we fetch the search page to get ourselves some session info...
         search_form_response = self._getSearchResponse()
         
@@ -158,10 +158,8 @@ class AcolnetParser:
         action_url = urlparse.urljoin(self.base_url, action)
         #print action_url
 
-        our_date = date(year, month, day)
-        
-        search_data = {"regdate1": our_date.strftime(date_format),
-                       "regdate2": our_date.strftime(date_format),
+        search_data = {"regdate1": date_from.strftime(date_format),
+                       "regdate2": date_to.strftime(date_format),
                        }
         
         opener = urllib2.build_opener(MultipartPostHandler.MultipartPostHandler)
@@ -198,10 +196,11 @@ class AcolnetParser:
 
             self._results.addApplication(self._current_application)
 
-
         return self._results
 
-
+    def getResultsByDayMonthYear(self, day, month, year):
+        our_date = date(year, month, day)
+        return getResultsByDateRange(our_date, our_date)
 
     def getResults(self, day, month, year):
         results =  self.getResultsByDayMonthYear(int(day), int(month), int(year)).displayXML()

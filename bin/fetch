@@ -11,22 +11,22 @@ parser = AcolnetParser.AcolnetParser('', '',
     "http://planningcases.barnet.gov.uk/planning-cases/acolnetcgi.exe?ACTION=UNWRAP&RIPNAME=Root.pgesearch"
 )
 
-for i in range(5, 0, -1):
-    date = datetime.date.today() - datetime.timedelta(days=i)
-    results = parser.getResultsByDayMonthYear(date.day, date.month, date.year)
+date_from = datetime.date.today() - datetime.timedelta(days=5)
+date_to = datetime.date.today() - datetime.timedelta(days=1)
+results = parser.getResultsByDateRange(date_from, date_to)
 
-    out = []
-    for app in results.planning_applications:
-        out.append({
-            'council_reference': app.council_reference,
-            'address': app.address,
-            'postcode': app.postcode,
-            'description': app.description,
-            'info_url': app.info_url,
-            'received': app.date_received.isoformat(),
-        })
+out = []
+for app in results.planning_applications:
+    out.append({
+        'council_reference': app.council_reference,
+        'address': app.address,
+        'postcode': app.postcode,
+        'description': app.description,
+        'info_url': app.info_url,
+        'received': app.date_received.isoformat(),
+    })
 
-    fp = open(sys.path[0] + '/../data/apps-%s' % date, 'w')
-    simplejson.dump(out, fp)
-    fp.close()
+fp = open(sys.path[0] + '/../data/apps-%s' % datetime.date.today(), 'w')
+simplejson.dump(out, fp)
+fp.close()
 
