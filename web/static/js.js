@@ -22,6 +22,14 @@ $(function(){
             url: 'http://mapit.mysociety.org/postcode/' + encodeURIComponent(val),
             dataType: 'jsonp',
             success: function(data) {
+                if (data['error']) {
+                    if (data['code'] == 400) {
+                        show_error('#id_postcode', "That doesn't appear to be a valid postcode, sorry.");
+                    } else if (data['code'] == 404) {
+                        show_error('#id_postcode', "Sorry, we couldn't find that postcode.");
+                    }
+                    return;
+                }
                 if (data['shortcuts']['council'] != 2489) {
                     show_error('#id_postcode', "That postcode doesn't appear to be within Barnet, sorry.");
                     return;
@@ -34,11 +42,6 @@ $(function(){
                 $("input[name='radius']:checked").click();
             },
             error: function(xhr) {
-                if (xhr.status == 400) {
-                    show_error('#id_postcode', "That doesn't appear to be a valid postcode, sorry.");
-                } else if (xhr.status == 404) {
-                    show_error('#id_postcode', "Sorry, we couldn't find that postcode.");
-                }
             }
         });
     });
