@@ -22,6 +22,7 @@ $(function(){
             url: 'http://mapit.mysociety.org/postcode/' + encodeURIComponent(val),
             dataType: 'jsonp',
             success: function(data) {
+                hide_error('#id_postcode');
                 if (data['error']) {
                     if (data['code'] == 400) {
                         show_error('#id_postcode', "That doesn't appear to be a valid postcode, sorry.");
@@ -34,7 +35,6 @@ $(function(){
                     show_error('#id_postcode', "That postcode doesn't appear to be within Barnet, sorry.");
                     return;
                 }
-                hide_error('#id_postcode');
                 map.setCenter(new OpenLayers.LonLat(data['wgs84_lon'], data['wgs84_lat']).transform(
                     new OpenLayers.Projection("EPSG:4326"),
                     new OpenLayers.Projection("EPSG:900913")
