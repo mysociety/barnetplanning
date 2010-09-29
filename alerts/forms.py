@@ -24,4 +24,4 @@ class AlertForm(forms.ModelForm):
 
     class Meta:
         model = Alert
-        exclude = ('location',)
+        fields = ('postcode', 'email', 'radius')

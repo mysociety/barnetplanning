@@ -1,0 +1,16 @@
+{% for application in applications %}
+
+    {{ application.address }} ({{ application.council_reference }})
+
+    {{ application.description }}
+
+    More information: {{ application.info_url }}
+
+    =============================
+
+{% endfor %}
+
+    ------------------------------------------------------------
+
+    To stop receiving these emails follow this link:
+        {{ unsubscribe_url }}

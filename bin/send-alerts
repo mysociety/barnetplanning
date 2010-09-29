@@ -1,0 +1,29 @@
+#!/usr/bin/env python
+
+import os, sys, datetime
+file_dir = os.path.abspath(os.path.realpath(os.path.dirname(__file__)))
+sys.path.append(os.path.normpath(file_dir + "/.."))
+os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
+
+from django.contrib.gis.measure import Distance
+
+from alerts.models import Alert
+from applications.models import Application
+from emailconfirmation.utils import send_email
+
+last_week = datetime.datetime.today() - datetime.timedelta(days=7)
+
+for alert in Alert.objects.all():
+    applications = Application.objects.exclude(alert=alert.id).filter(
+        created__gt=last_week,
+        location__distance_lte=(alert.location, Distance(m=alert.radius))
+    )
+    if applications:
+        send_email(None, 'New planning applications near ' + alert.postcode,
+            'email-alert.txt', {
+                'applications': applications,
+                'alert': alert,
+            }, alert.email
+        )
+        alert.applications.add(*list(applications))
+
