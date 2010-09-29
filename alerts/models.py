@@ -1,4 +1,5 @@
 from django.contrib.gis.db import models
+from applications.models import Application
 
 class Alert(models.Model):
     email = models.EmailField()
@@ -9,6 +10,7 @@ class Alert(models.Model):
         (800, 'about half a mile / 800m'),
         (1600, 'about a mile / 1.6km'),
     ))
+    applications = models.ManyToManyField(Application)
 
     objects = models.GeoManager()
 
