@@ -7,5 +7,6 @@
 }
 
 #map div.olControlAttribution {
+    text-align: right;
     bottom: 0.5em;
 }

@@ -3,7 +3,7 @@ $(function(){
     if ($('#map').length) {
         var map = new OpenLayers.Map('map');
         var osLayer = new OpenLayers.Layer.OSM('OS StreetView', 'http://os.openstreetmap.org/sv/${z}/${x}/${y}.png', {
-            attribution: 'Map hosted by <a href="http://openstreetmap.org/">OpenStreetMap</a>. Contains Ordnance Survey data &copy; Crown copyright and database right 2010',
+            attribution: 'Map hosted by <a href="http://openstreetmap.org/">OpenStreetMap</a>.<br>Contains Ordnance Survey data &copy; Crown copyright and database right 2010',
             minZoomLevel: 9,
             maxZoomLevel: 16,
             numZoomLevels: null
