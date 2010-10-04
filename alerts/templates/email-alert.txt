@@ -1,13 +1,16 @@
+Hi,
+
+The following new planning applications have been received:
 {% for application in applications %}
     {{ application.address|safe }} ({{ application.council_reference|safe }})
 
     {{ application.description|safe }}
 
     More information: {{ application.info_url|safe }}
-
-    =============================
-{% endfor %}
-    ------------------------------------------------------------
+{% if not forloop.last %}
+    -----------------------------
+{% endif %}{% endfor %}
+    ============================================================
 
     To stop receiving these emails follow this link:
         {{ unsubscribe_url }}
