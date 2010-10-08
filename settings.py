@@ -23,7 +23,7 @@ SERVER_EMAIL = mysociety.config.get('BUGS_EMAIL')
 ADMINS = (
     ('mySociety bugs', mysociety.config.get('BUGS_EMAIL')),
 )
-DEFAULT_FROM_EMAIL = mysociety.config.get('BUGS_EMAIL')
+DEFAULT_FROM_EMAIL = 'Barnet Planning Alerts <%s>' % mysociety.config.get('BUGS_EMAIL')
 
 MANAGERS = ADMINS
 
@@ -88,7 +88,6 @@ TEMPLATE_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     package_dir + '/templates',
-    package_dir + '/commonlib/pylib/djangoapps/emailconfirmation/templates',
 )
 
 INSTALLED_APPS = (
