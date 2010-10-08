@@ -5,6 +5,7 @@ package_dir = os.path.abspath(os.path.realpath(os.path.dirname(__file__)))
 paths = (
     os.path.normpath(package_dir + "/pylib"),
     os.path.normpath(package_dir + "/commonlib/pylib"),
+    os.path.normpath(package_dir + "/commonlib/pylib/djangoapps"),
 )
 for path in paths:
     if path not in sys.path:
