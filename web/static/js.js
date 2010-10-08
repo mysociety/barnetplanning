@@ -1,19 +1,13 @@
+var map;
+
 $(function(){
 
     if ($('#map').length) {
-        var map = new OpenLayers.Map('map');
-        var osLayer = new OpenLayers.Layer.OSM('OS StreetView', 'http://os.openstreetmap.org/sv/${z}/${x}/${y}.png', {
-            attribution: 'Map hosted by <a href="http://openstreetmap.org/">OpenStreetMap</a>.<br>Contains Ordnance Survey data &copy; Crown copyright and database right 2010',
-            minZoomLevel: 9,
-            maxZoomLevel: 16,
-            numZoomLevels: null
+        map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 12,
+            center: new google.maps.LatLng(51.652963, -0.2005),
+            mapTypeId: google.maps.MapTypeId.ROADMAP
         });
-        polygonLayer = new OpenLayers.Layer.Vector('Polygon Layer');
-        map.addLayers([osLayer, polygonLayer]);
-        map.setCenter(new OpenLayers.LonLat(-0.2005, 51.652963).transform(
-            new OpenLayers.Projection("EPSG:4326"),
-            new OpenLayers.Projection("EPSG:900913")
-        ), 12);
     }
 
     $('#id_postcode').change(function(){
@@ -35,10 +29,9 @@ $(function(){
                     show_error('#id_postcode', "That postcode doesn't appear to be within Barnet, sorry.");
                     return;
                 }
-                map.setCenter(new OpenLayers.LonLat(data['wgs84_lon'], data['wgs84_lat']).transform(
-                    new OpenLayers.Projection("EPSG:4326"),
-                    new OpenLayers.Projection("EPSG:900913")
-                ), 15);
+                if (!map) return;
+                map.setCenter(new google.maps.LatLng(data['wgs84_lat'], data['wgs84_lon']));
+                map.setZoom(14);
                 $("input[name='radius']:checked").click();
             },
             error: function(xhr) {
@@ -51,12 +44,13 @@ $(function(){
 
     $("input[name='radius']").click(function(){
         var radius = $(this).val();
-        createCircle(map.center.lon, map.center.lat, radius);
-        if (radius>1000 && map.zoom > 14) {
-            map.zoomTo(14);
+        if (!map) return;
+        createCircle(map.getCenter(), radius);
+        if (radius>1000 && map.getZoom() > 13) {
+            map.setZoom(13);
         }
-        if (radius<500 && map.zoom < 15) {
-            map.zoomTo(15);
+        if (radius<500 && map.getZoom() < 14) {
+            map.setZoom(14);
         }
     });
 
@@ -74,12 +68,21 @@ $(function(){
     });
 });
 
-function createCircle(x, y, radius) {
-    var point = new OpenLayers.Geometry.Point(x, y);
-    var circle = OpenLayers.Geometry.Polygon.createRegularPolygon(point, radius, 50);
-    var feature = new OpenLayers.Feature.Vector(circle);
-    polygonLayer.removeAllFeatures();
-    polygonLayer.addFeatures([feature]);
+var circle;
+function createCircle(c, radius) {
+    if (circle) {
+        circle.setCenter(c);
+        circle.setRadius(parseInt(radius));
+    } else {
+        circle = new google.maps.Circle({
+            map: map,
+            center: c,
+            radius: parseInt(radius),
+            fillColor: '#ee9900',
+            strokeColor: '#ee9900',
+            strokeWeight: 1
+        });
+    }
 }
 
 function show_error(id, text) {
