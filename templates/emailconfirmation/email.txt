@@ -1,0 +1,10 @@
+Hello,
+
+Thanks for signing up for a Barnet planning alert around {{ object.postcode }}.
+To confirm, please follow this link:
+
+http://{{ host }}{% url emailconfirmation-check-token id=id, token=token %}
+
+Yours,
+The Team
+
