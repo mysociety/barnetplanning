@@ -1,5 +1,7 @@
 from django.contrib.gis.db import models
+from django.contrib.contenttypes import generic
 from applications.models import Application
+from emailconfirmation.models import EmailConfirmation
 
 class Alert(models.Model):
     email = models.EmailField()
@@ -11,6 +13,7 @@ class Alert(models.Model):
         (1600, 'about a mile / 1.6km'),
     ))
     applications = models.ManyToManyField(Application)
+    confirmed = generic.GenericRelation(EmailConfirmation)
 
     objects = models.GeoManager()
 
