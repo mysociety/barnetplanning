@@ -13,7 +13,7 @@ from emailconfirmation.utils import send_email
 
 last_week = datetime.datetime.today() - datetime.timedelta(days=7)
 
-for alert in Alert.objects.all():
+for alert in Alert.objects.filter(confirmed__confirmed=True):
     applications = Application.objects.exclude(alert=alert.id).filter(
         created__gt=last_week,
         location__distance_lte=(alert.location, Distance(m=alert.radius))
