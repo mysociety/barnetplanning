@@ -2,6 +2,7 @@ python-simplejson
 python-django
 libapache2-mod-wsgi
 python-psycopg2 
+python-django-south
 
 libgdal1-1.5.0
 postgresql-8.3

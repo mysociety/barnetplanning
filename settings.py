@@ -100,4 +100,5 @@ INSTALLED_APPS = (
     'emailconfirmation',
     'alerts',
     'applications',
+    'south',
 )
