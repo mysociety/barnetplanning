@@ -13,10 +13,14 @@ import simplejson
 
 from django.contrib.gis.measure import Distance
 
+from django.contrib.sites.models import Site
 from alerts.models import Alert
 from applications.models import Application
+from emailconfirmation.models import EmailConfirmation
 from emailconfirmation.utils import send_email
 
+
+current_site = Site.objects.get_current()
 
 # Make a dictionary of ward name to id
 mapit_response = urllib2.urlopen("http://mapit.mysociety.org/area/2489/children.json")
@@ -43,10 +47,12 @@ for alert in Alert.objects.filter(confirmed__confirmed=True):
         email_subject = 'New planning applications in %s' %ward_name_lookup_dict[alert.ward_mapit_id]
 
     if applications:
-        send_email(None, 
-                   email_subject,
-                   'email-alert.txt',
-                   {'applications': applications, 'alert': alert},
-                   alert.email,
-                   )
+        unsubscribe_url = 'http://%s%s' % (current_site.domain, EmailConfirmation.objects.path_for_unsubscribe(alert))
+        send_email(
+            None,
+            email_subject,
+            'email-alert.txt',
+            { 'applications': applications, 'alert': alert, 'unsubscribe_url': unsubscribe_url },
+            alert.email,
+        )
         alert.applications.add(*list(applications))

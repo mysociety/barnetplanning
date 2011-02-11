@@ -20,10 +20,16 @@ def home(request):
             location = postcode_lookup(alert.postcode)
             alert.location = Point(location['wgs84_lon'], location['wgs84_lat'])
             alert.save()
-            EmailConfirmation.objects.confirm(request, alert, 'alert-confirmed')
+            EmailConfirmation.objects.confirm(
+                request, alert,
+                'alert-confirmed', 'alert-unsubscribed'
+            )
             return render(request, 'check-email.html')
     return render(request, 'home.html', { 'form': form })
 
 def confirmed(request, id):
     return render(request, 'confirmed.html')
+
+def unsubscribed(request, id):
+    return render(request, 'unsubscribed.html')
     
