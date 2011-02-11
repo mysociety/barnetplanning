@@ -105,6 +105,8 @@ class AcolnetParser:
 
         return urlparse.urlunsplit(split_info_url[:3] + (comment_qs,) + split_info_url[4:])
 
+    def _getWard(self, app_table):
+        return app_table.findAll("td")[8].string.strip()
 
     def __init__(self,
                  authority_name,
@@ -193,6 +195,7 @@ class AcolnetParser:
             self._current_application.info_url = self._getInfoUrl(app_table)
             self._current_application.comment_url = self._getCommentUrl(app_table)
             self._current_application.date_received = self._getDateReceived(app_table)
+            self._current_application.ward_name = self._getWard(app_table)
 
             self._results.addApplication(self._current_application)
 
@@ -249,7 +252,7 @@ class CanterburyParser(AcolnetParser):
         return app_table.findAll("td")[1].string.strip()
 
     def _getDescription(self, app_table):
-        return app_table.findAll("td")[2].string.strip()        
+        return app_table.findAll("td")[2].string.strip()
 
 class GreenwichParser(AcolnetParser):
     received_date_label = "Registration date:"
