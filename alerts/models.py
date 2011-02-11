@@ -5,13 +5,19 @@ from emailconfirmation.models import EmailConfirmation
 
 class Alert(models.Model):
     email = models.EmailField()
-    postcode = models.CharField(max_length=8)
+    postcode = models.CharField(max_length=8, null=True, blank=True)
+    ward_mapit_id = models.IntegerField(null=True, blank=True)
     location = models.PointField(null=True)
-    radius = models.IntegerField(default=800, choices=(
-        (183, 'about 200 yards / 180m'),
-        (800, 'about half a mile / 800m'),
-        (1600, 'about a mile / 1.6km'),
-    ))
+    radius = models.IntegerField(
+        default=800, 
+        null=True,
+        blank=True,
+        choices=(
+            (183, 'about 200 yards / 180m'),
+            (800, 'about half a mile / 800m'),
+            (1600, 'about a mile / 1.6km'),
+            ),
+        )
     applications = models.ManyToManyField(Application)
     confirmed = generic.GenericRelation(EmailConfirmation)
 
