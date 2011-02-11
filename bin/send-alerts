@@ -37,9 +37,9 @@ for alert in Alert.objects.filter(confirmed__confirmed=True):
             )
         email_subject = 'New planning applications near %s' %alert.postcode
 
-    elif alert.mapit_ward_id:
+    elif alert.ward_mapit_id:
         # This is an alert by ward_id
-        applications = applications_qs.filter(mapit_ward_id=alert.mapit_ward_id)
+        applications = applications_qs.filter(ward_mapit_id=alert.ward_mapit_id)
         email_subject = 'New planning applications in %s' %ward_name_lookup_dict[alert.ward_mapit_id]
 
     if applications:
