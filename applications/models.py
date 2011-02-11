@@ -5,6 +5,7 @@ class Application(models.Model):
     address = models.TextField()
     postcode = models.CharField(max_length=8)
     location = models.PointField(null=True)
+    ward_mapit_id = models.IntegerField(null=True) #The integer mapit id. null=True right now to ease the migration.
     description = models.TextField()
     info_url = models.CharField(max_length=1024)
     created = models.DateTimeField(auto_now_add=True)
