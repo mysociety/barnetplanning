@@ -200,7 +200,7 @@ class AcolnetParser:
 
     def getResultsByDayMonthYear(self, day, month, year):
         our_date = date(year, month, day)
-        return getResultsByDateRange(our_date, our_date)
+        return self.getResultsByDateRange(our_date, our_date)
 
     def getResults(self, day, month, year):
         results =  self.getResultsByDayMonthYear(int(day), int(month), int(year)).displayXML()
