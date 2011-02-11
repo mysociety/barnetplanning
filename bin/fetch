@@ -5,6 +5,15 @@
 import sys
 import datetime
 import simplejson
+import urllib2
+
+# Make a dictionary of ward name to id
+mapit_response = urllib2.urlopen("http://mapit.mysociety.org/area/2489/children.json")
+mapit_data = simplejson.load(mapit_response)
+
+# A dictionary of ward names to ward ids.
+ward_id_lookup_dict = dict([(mapit_data[value]['name'], int(value)) for value in mapit_data])
+
 from scraper import AcolnetParser
 
 parser = AcolnetParser.AcolnetParser('', '',
@@ -24,7 +33,7 @@ for app in results.planning_applications:
         'description': app.description,
         'info_url': app.info_url,
         'received': app.date_received.isoformat(),
-        'ward_name': app.ward_name,
+        'ward_mapit_id': ward_id_lookup_dict.get(app.ward_name),
     })
 
 fp = open(sys.path[0] + '/../data/apps-%s' % datetime.date.today(), 'w')
