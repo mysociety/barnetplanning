@@ -6,7 +6,8 @@ import datetime
 
 file_dir = os.path.abspath(os.path.realpath(os.path.dirname(__file__)))
 sys.path.append(os.path.normpath(file_dir + "/.."))
-os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
+sys.path.append(os.path.normpath(file_dir + "/../.."))
+os.environ['DJANGO_SETTINGS_MODULE'] = 'barnetplanning.settings'
 
 import urllib2
 import simplejson
@@ -16,7 +17,6 @@ from django.contrib.gis.measure import Distance
 from django.contrib.sites.models import Site
 from alerts.models import Alert
 from applications.models import Application
-from emailconfirmation.models import EmailConfirmation
 from emailconfirmation.utils import send_email
 
 
@@ -47,7 +47,7 @@ for alert in Alert.objects.filter(confirmed__confirmed=True):
         email_subject = 'New planning applications in %s' %ward_name_lookup_dict[alert.ward_mapit_id]
 
     if applications:
-        unsubscribe_url = 'http://%s%s' % (current_site.domain, EmailConfirmation.objects.path_for_unsubscribe(alert))
+        unsubscribe_url = 'http://%s%s' % (current_site.domain, alert.confirmed.all()[0].path_for_unsubscribe())
         send_email(
             None,
             email_subject,
