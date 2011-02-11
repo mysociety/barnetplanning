@@ -1,3 +1,6 @@
+import urllib2
+import simplejson
+
 from django import forms
 from django.contrib.localflavor.uk.forms import UKPostcodeField
 
@@ -8,20 +11,31 @@ from models import Alert
 # So remove this extra class when we have a recent enough Django.
 class MyUKPostcodeField(UKPostcodeField):
     default_error_messages = {
-        'required': 'Please enter your postcode',
+#        'required': 'Please enter your postcode',
         'invalid': 'We need your complete UK postcode.'
     }
     widget = forms.TextInput(attrs={'size':'8'})
 
 class AlertForm(forms.ModelForm):
     email = forms.EmailField(label='Your email address', error_messages={'required': 'Please enter your email address.'})
-    postcode = MyUKPostcodeField()
+    postcode = MyUKPostcodeField(required=False)
+    ward_mapit_id = forms.ChoiceField(required=False)
 
     def __init__(self, *args, **kwargs):
         super(AlertForm, self).__init__(*args, **kwargs)
         self.fields['radius'].label = 'How far around your postcode would you like to receive alerts for?'
         self.fields['radius'].widget = forms.RadioSelect(choices=self.fields['radius'].choices)
 
+        # Make a dictionary of ward name to id
+        mapit_response = urllib2.urlopen("http://mapit.mysociety.org/area/2489/children.json")
+        mapit_data = simplejson.load(mapit_response)
+
+        self.fields['ward_mapit_id'].choices = sorted(
+            [(int(value), mapit_data[value]['name']) for value in mapit_data],
+            key=lambda x: x[1],
+            )
+        self.fields['ward_mapit_id'].label = 'Ward'
+
     class Meta:
         model = Alert
-        fields = ('postcode', 'email', 'radius')
+        fields = ('postcode', 'ward_mapit_id', 'email', 'radius')

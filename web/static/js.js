@@ -65,10 +65,10 @@ $(function(){
             show_error('#id_email', 'Please enter your email address.');
             go = false;
         }
-        if (!$('#id_postcode').val()) {
-            show_error('#id_postcode', 'Please enter a postcode.');
-            go = false;
-        }
+	//        if (!$('#id_postcode').val()) {
+        //    show_error('#id_postcode', 'Please enter a postcode.');
+        //    go = false;
+        //}
         return go;
     });
 });
