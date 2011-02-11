@@ -1,4 +1,4 @@
-var map;
+var map, boundary;
 
 $(function(){
 
@@ -8,12 +8,22 @@ $(function(){
             center: new google.maps.LatLng(51.61, -0.22),
             mapTypeId: google.maps.MapTypeId.ROADMAP
         });
-        var boundary = new google.maps.KmlLayer('/static/2489.kml', {
+        boundary = new google.maps.KmlLayer('/static/2489.kml', {
             preserveViewport: true,
             suppressInfoWindows: true
         });
         boundary.setMap(map);
     }
+
+    $('#id_ward_mapit_id').change(function(){
+        var val = $(this).val();
+        boundary.setMap(null);
+        if (!val) val = '2489';
+        boundary = new google.maps.KmlLayer('http://mapit.mysociety.org/area/' + val + '.kml', {
+            suppressInfoWindows: true
+        });
+        boundary.setMap(map);
+    });
 
     $('#id_postcode').change(function(){
         var val = $(this).val();
