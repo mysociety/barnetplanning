@@ -24,6 +24,7 @@ for app in results.planning_applications:
         'description': app.description,
         'info_url': app.info_url,
         'received': app.date_received.isoformat(),
+        'ward_name': app.ward_name,
     })
 
 fp = open(sys.path[0] + '/../data/apps-%s' % datetime.date.today(), 'w')
