@@ -4,10 +4,15 @@ $(function(){
 
     if ($('#map').length) {
         map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 12,
-            center: new google.maps.LatLng(51.652963, -0.2005),
+            zoom: 11,
+            center: new google.maps.LatLng(51.61, -0.22),
             mapTypeId: google.maps.MapTypeId.ROADMAP
         });
+        var boundary = new google.maps.KmlLayer('/static/2489.kml', {
+            preserveViewport: true,
+            suppressInfoWindows: true
+        });
+        boundary.setMap(map);
     }
 
     $('#id_postcode').change(function(){
