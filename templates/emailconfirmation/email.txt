@@ -1,6 +1,10 @@
 Hello,
 
+{% if object.postcode %}
 Thanks for signing up for a Barnet planning alert around {{ object.postcode }}.
+{% else %}
+Thanks for signing up for an alert for planning applications in {{ object.ward_name }}.
+{% endif %}
 To confirm, please follow this link:
 
 http://{{ host }}{% url emailconfirmation-confirm id=id, token=token %}

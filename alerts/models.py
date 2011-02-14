@@ -1,3 +1,6 @@
+import urllib2
+import simplejson
+
 from django.contrib.gis.db import models
 from django.contrib.contenttypes import generic
 from applications.models import Application
@@ -22,6 +25,18 @@ class Alert(models.Model):
     confirmed = generic.GenericRelation(EmailConfirmation)
 
     objects = models.GeoManager()
+
+    _ward_name = None
+
+    @property
+    def ward_name(self):
+        if self.ward_mapit_id and not self._ward_name:
+            # Make a dictionary of ward name to id
+            mapit_response = urllib2.urlopen("http://mapit.mysociety.org/area/%s" %self.ward_mapit_id)
+            mapit_data = simplejson.load(mapit_response)
+            self._ward_name = mapit_data.get('name')
+        
+        return self._ward_name
 
     class Meta:
         ordering = ('email',)
