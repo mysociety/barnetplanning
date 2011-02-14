@@ -2,6 +2,10 @@ var map, boundary;
 
 $(function(){
     $('#alert_form').before('<div id="map"></div>');
+
+    // With javascript on, we can mention the map
+    $('#barnet_only_warning').html('Please note that you will only be alerted about planning applications made to Barnet (within the blue boundary on the map), not to other neighbouring authorities.');
+
     if ($('#map').length) {
         map = new google.maps.Map(document.getElementById('map'), {
             zoom: 11,
