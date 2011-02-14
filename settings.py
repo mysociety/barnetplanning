@@ -98,8 +98,8 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.gis',
     'emailconfirmation',
-    'alerts',
     'applications',
+    'alerts',
     'static_texts',
     'south',
 )
