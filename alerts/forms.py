@@ -11,7 +11,6 @@ from models import Alert
 # So remove this extra class when we have a recent enough Django.
 class MyUKPostcodeField(UKPostcodeField):
     default_error_messages = {
-#        'required': 'Please enter your postcode',
         'invalid': 'We need your complete UK postcode.'
     }
     widget = forms.TextInput(attrs={'size':'8'})
