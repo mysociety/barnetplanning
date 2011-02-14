@@ -19,7 +19,7 @@ class MyUKPostcodeField(UKPostcodeField):
 class AlertForm(forms.ModelForm):
     email = forms.EmailField(label='Your email address', error_messages={'required': 'Please enter your email address.'})
     postcode = MyUKPostcodeField(required=False)
-    ward_mapit_id = forms.ChoiceField(required=False, initial=None)
+    ward_mapit_id = forms.TypedChoiceField(required=False, coerce=int, initial=None)
 
     def __init__(self, *args, **kwargs):
         super(AlertForm, self).__init__(*args, **kwargs)
@@ -32,10 +32,34 @@ class AlertForm(forms.ModelForm):
 
         ward_choices = [(int(value), mapit_data[value]['name']) for value in mapit_data]
         ward_choices.sort(key=lambda x: x[1])
-        ward_choices.insert(0, (None, 'Select'))
+        ward_choices.insert(0, (-1, 'Select'))
 
         self.fields['ward_mapit_id'].choices = ward_choices
         self.fields['ward_mapit_id'].label = 'Ward'
+
+    def clean_ward_mapit_id(self):
+        """We can't use None directly in the form, as it gets stringified into 'None'.
+        Instead, we use -1 as the signifier of nothing chosen, and turn it into None here."""
+        
+        ward_id = self.cleaned_data['ward_mapit_id']
+
+        if ward_id == -1:
+            return None
+        else:
+            return ward_id
+
+    def clean(self):
+        cleaned_data = super(AlertForm, self).clean()
+
+        postcode = cleaned_data.get('postcode')
+        ward_mapit_id = cleaned_data.get('ward_mapit_id')
+        
+        if postcode and ward_mapit_id:
+            raise forms.ValidationError('Please choose either a postcode or a ward, but not both')
+        if not postcode and not ward_mapit_id:
+            raise forms.ValidationError('Please enter a postcode or a ward.')
+
+        return cleaned_data
 
     class Meta:
         model = Alert
