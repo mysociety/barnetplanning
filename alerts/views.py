@@ -20,6 +20,8 @@ def home(request):
             if alert.postcode:
                 location = postcode_lookup(alert.postcode)
                 alert.location = Point(location['wgs84_lon'], location['wgs84_lat'])
+            else:
+                alert.radius = None
             alert.save()
             EmailConfirmation.objects.confirm(
                 request, alert,
