@@ -1,7 +1,7 @@
 var map, boundary;
 
 $(function(){
-
+    $('#alert_form').before('<div id="map"></div>');
     if ($('#map').length) {
         map = new google.maps.Map(document.getElementById('map'), {
             zoom: 11,
