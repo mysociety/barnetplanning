@@ -72,6 +72,8 @@ $(function(){
 
     $('#alert_form').submit(function(){
         var go = true;
+	hide_error('#id_email');
+
         if (!$('#id_email').val()) {
             show_error('#id_email', 'Please enter your email address.');
             go = false;
@@ -79,7 +81,8 @@ $(function(){
 	
 	var postcode = $('#id_postcode').val();
 	var ward_mapit_id = $('#id_ward_mapit_id').val();
-      
+
+	hide_error('#id_postcode');
 	if ((!postcode) && (ward_mapit_id == -1)) {
             show_error('#id_postcode', 'Please enter a postcode or a ward');
             go = false;
