@@ -7,9 +7,28 @@
 <h1>Barnet planning alerts</h1>
 
 <p>Sign up to receive an email whenever a new planning application is made near you.</p>
+
 <form method="post" action="/" id="alert_form">
-<p>Please choose a postcode <strong>OR</strong> a ward<p>
-{{ form.as_p }}
+<p>Please enter your postcode <strong>OR</strong> pick a ward.</p>
+
+{{ form.non_field_errors }}
+
+{{ form.postcode.errors }}
+<p style="margin-bottom: 0.5em">{{ form.postcode.label_tag }}: {{ form.postcode }}</p>
+
+<p style="margin: 0.5em 0"><strong>OR</strong></p>
+
+{{ form.ward_mapit_id.errors }}
+<p style="margin-top: 0.5em">{{ form.ward_mapit_id.label_tag }}: {{ form.ward_mapit_id }}</p>
+
+{{ form.email.errors }}
+<p>{{ form.email.label_tag }}: {{ form.email }}</p>
+
+<div id="radius_pick">
+<p id="radius_label">{{ form.radius.label_tag }}</p>
+{{ form.radius }}
+</div>
+
 <input type="submit" value="Create alert">
 </form>
 

@@ -5,6 +5,8 @@ $(function(){
 
     // With javascript on, we can mention the map
     $('#barnet_only_warning').html('Please note that you will only be alerted about planning applications made to Barnet (within the blue boundary on the map), not to other neighbouring authorities.');
+    $('#radius_label').html('How far around your postcode would you like to receive alerts for?');
+    $('#radius_pick').hide();
 
     if ($('#map').length) {
         map = new google.maps.Map(document.getElementById('map'), {
@@ -32,6 +34,9 @@ $(function(){
 
     $('#id_postcode').change(function(){
         var val = $(this).val();
+        if (!val) {
+            $('#radius_pick').hide('fast');
+        }
         $.ajax({
             url: 'http://mapit.mysociety.org/postcode/' + encodeURIComponent(val),
             dataType: 'jsonp',
@@ -49,6 +54,8 @@ $(function(){
                     show_error('#id_postcode', "That postcode doesn't appear to be within Barnet, sorry.");
                     return;
                 }
+                $('#radius_pick').show('fast');
+                $('#id_ward_mapit_id').val(-1);
                 if (!map) return;
                 map.setCenter(new google.maps.LatLng(data['wgs84_lat'], data['wgs84_lon']));
                 map.setZoom(14);
