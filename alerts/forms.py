@@ -59,7 +59,7 @@ class AlertForm(forms.ModelForm):
         ward_mapit_id = cleaned_data.get('ward_mapit_id')
         
         if postcode and ward_mapit_id:
-            raise forms.ValidationError('Please choose either a postcode or a ward, but not both')
+            raise forms.ValidationError('You cannot enter both a postcode and a ward.')
         if not postcode and not ward_mapit_id:
             raise forms.ValidationError('Please enter a postcode or a ward.')
 
