@@ -5,8 +5,13 @@ import sys
 import datetime
 
 file_dir = os.path.abspath(os.path.realpath(os.path.dirname(__file__)))
-sys.path.append(os.path.normpath(file_dir + "/.."))
-sys.path.append(os.path.normpath(file_dir + "/../.."))
+paths = (
+    os.path.normpath(file_dir + "/.."),
+    os.path.normpath(file_dir + "/../.."),
+    os.path.normpath(file_dir + "/../commonlib/pylib"),
+)
+for path in paths:
+    sys.path.append(path)
 os.environ['DJANGO_SETTINGS_MODULE'] = 'barnetplanning.settings'
 
 import urllib2
@@ -18,7 +23,7 @@ import mysociety.config
 from alerts.models import Alert
 from applications.models import Application
 from emailconfirmation.utils import send_email
-
+from static_texts.models import StaticText
 
 # Make a dictionary of ward name to id
 mapit_response = urllib2.urlopen("http://mapit.mysociety.org/area/2489/children.json")
@@ -50,7 +55,12 @@ for alert in Alert.objects.filter(confirmed__confirmed=True):
             None,
             email_subject,
             'email-alert.txt',
-            { 'applications': applications, 'alert': alert, 'unsubscribe_url': unsubscribe_url },
+            {
+                'applications': applications,
+                'alert': alert,
+                'text': StaticText.objects.get(place='email-alert').text,
+                'unsubscribe_url': unsubscribe_url
+            },
             alert.email,
         )
         alert.applications.add(*list(applications))

@@ -8,6 +8,7 @@ from django.shortcuts import get_object_or_404
 from django.contrib.gis.geos import Point
 
 from emailconfirmation.models import EmailConfirmation
+from static_texts.models import StaticText
 
 from forms import AlertForm
 from utils import render, postcode_lookup
@@ -27,12 +28,17 @@ def home(request):
                 request, alert,
                 'alert-confirmed', 'alert-unsubscribed'
             )
-            return render(request, 'check-email.html')
+
+            text = StaticText.objects.get(place='check-email').text
+            return render(request, 'check-email.html', { 'text': text })
+
     return render(request, 'home.html', { 'form': form })
 
 def confirmed(request, id):
-    return render(request, 'confirmed.html')
+    text = StaticText.objects.get(place='confirmed').text
+    return render(request, 'confirmed.html', { 'text': text })
 
 def unsubscribed(request, id):
-    return render(request, 'unsubscribed.html')
+    text = StaticText.objects.get(place='unsubscribed').text
+    return render(request, 'unsubscribed.html', { 'text': text })
     

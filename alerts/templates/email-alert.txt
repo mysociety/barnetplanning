@@ -12,5 +12,8 @@ The following new planning applications have been received:
 {% endif %}{% endfor %}
     ============================================================
 
-    To stop receiving these emails follow this link:
-        {{ unsubscribe_url }}
+{{ text }}
+
+To stop receiving these emails follow this link:
+    {{ unsubscribe_url }}
+
