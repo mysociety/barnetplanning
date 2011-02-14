@@ -76,10 +76,18 @@ $(function(){
             show_error('#id_email', 'Please enter your email address.');
             go = false;
         }
-	//        if (!$('#id_postcode').val()) {
-        //    show_error('#id_postcode', 'Please enter a postcode.');
-        //    go = false;
-        //}
+	
+	var postcode = $('#id_postcode').val();
+	var ward_mapit_id = $('#id_ward_mapit_id').val();
+      
+	if ((!postcode) && (ward_mapit_id == -1)) {
+            show_error('#id_postcode', 'Please enter a postcode or a ward');
+            go = false;
+        };
+	if ((postcode) && (ward_mapit_id != -1)) {
+	    show_error('#id_postcode', 'You cannot enter both a postcode and a ward');
+	    go = false;
+	};
         return go;
     });
 });
