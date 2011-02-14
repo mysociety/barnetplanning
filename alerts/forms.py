@@ -19,7 +19,7 @@ class MyUKPostcodeField(UKPostcodeField):
 class AlertForm(forms.ModelForm):
     email = forms.EmailField(label='Your email address', error_messages={'required': 'Please enter your email address.'})
     postcode = MyUKPostcodeField(required=False)
-    ward_mapit_id = forms.ChoiceField(required=False)
+    ward_mapit_id = forms.ChoiceField(required=False, initial=None)
 
     def __init__(self, *args, **kwargs):
         super(AlertForm, self).__init__(*args, **kwargs)
@@ -30,10 +30,11 @@ class AlertForm(forms.ModelForm):
         mapit_response = urllib2.urlopen("http://mapit.mysociety.org/area/2489/children.json")
         mapit_data = simplejson.load(mapit_response)
 
-        self.fields['ward_mapit_id'].choices = sorted(
-            [(int(value), mapit_data[value]['name']) for value in mapit_data],
-            key=lambda x: x[1],
-            )
+        ward_choices = [(int(value), mapit_data[value]['name']) for value in mapit_data]
+        ward_choices.sort(key=lambda x: x[1])
+        ward_choices.insert(0, (None, 'Select'))
+
+        self.fields['ward_mapit_id'].choices = ward_choices
         self.fields['ward_mapit_id'].label = 'Ward'
 
     class Meta:
