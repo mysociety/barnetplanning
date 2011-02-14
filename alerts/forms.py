@@ -23,7 +23,7 @@ class AlertForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(AlertForm, self).__init__(*args, **kwargs)
-        self.fields['radius'].label = 'How far around your postcode would you like to receive alerts for?'
+        self.fields['radius'].label = 'If you chose a postcode, how far around your postcode would you like to receive alerts for?'
         self.fields['radius'].widget = forms.RadioSelect(choices=self.fields['radius'].choices)
 
         # Make a dictionary of ward name to id
