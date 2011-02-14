@@ -31,6 +31,9 @@ class AlertForm(forms.ModelForm):
 
         ward_choices = [(int(value), mapit_data[value]['name']) for value in mapit_data]
         ward_choices.sort(key=lambda x: x[1])
+
+        # FIXME - at some point in the future, should work out why None doesn't work here,
+        # and get rid of the clean_ward_mapit_id method.
         ward_choices.insert(0, (-1, 'Select'))
 
         self.fields['ward_mapit_id'].choices = ward_choices
