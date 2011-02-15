@@ -6,33 +6,54 @@
 
 <h1>Barnet planning alerts</h1>
 
-<p>Sign up to receive an email whenever a new planning application is made near you.</p>
+    <div class="ms-intro">
+        <p>Sign up to receive an email whenever a new planning application is made near you.</p>
+    </div>
+    
 
-<form method="post" action="/" id="alert_form">
-<p>Please enter your postcode <strong>OR</strong> pick a ward.</p>
+    <p>Please pick a ward <strong>OR</strong> enter your postcode.</p>
+    <form method="post" action="/" id="alert_form">
+        <div class="ms-form">
+            {{ form.non_field_errors }}
 
-{{ form.non_field_errors }}
+            <div class="ms-location">
 
-{{ form.postcode.errors }}
-<p style="margin-bottom: 0.5em">{{ form.postcode.label_tag }}: {{ form.postcode }}</p>
+                <div class="ms-ward">
+                    {{ form.ward_mapit_id.errors }}
+                    <p style="margin-top: 0.5em">{{ form.ward_mapit_id.label_tag }}: {{ form.ward_mapit_id }}</p>
+                </div>
+            
+                <p><strong>OR</strong></p>
 
-<p style="margin: 0.5em 0"><strong>OR</strong></p>
 
-{{ form.ward_mapit_id.errors }}
-<p style="margin-top: 0.5em">{{ form.ward_mapit_id.label_tag }}: {{ form.ward_mapit_id }}</p>
+                <div class="ms-pc">
+                    {{ form.postcode.errors }}
+                    <p style="margin-bottom: 0.5em" id="ms-pc-form">
+                        {{ form.postcode.label_tag }}: {{ form.postcode }}
+                        <!-- 'do-nothing' interface button goes here -->
+                    </p>
 
-{{ form.email.errors }}
-<p>{{ form.email.label_tag }}: {{ form.email }}</p>
+                    <div id="radius_pick">
+                        <p id="radius_label">{{ form.radius.label_tag }}</p>
+                        {{ form.radius }}
+                    </div>
 
-<div id="radius_pick">
-<p id="radius_label">{{ form.radius.label_tag }}</p>
-{{ form.radius }}
-</div>
+                </div>
+            </div>
+            <div class="ms-email">
+                {{ form.email.errors }}
+                <p>{{ form.email.label_tag }}: {{ form.email }}</p>
+            </div>
 
-<input type="submit" value="Create alert">
-</form>
 
-<p id="barnet_only_warning">Please note that you will only be alerted about planning applications made to Barnet, not to other neighbouring authorities.</p>
+            <input type="submit" value="Create alert" id="create">
+        </div>
+    </form>
+
+    <p id="barnet_only_warning" class="ms-breakout">
+        Please note that you will only be alerted about planning applications made to Barnet, 
+        not to other neighbouring authorities.
+    </p>
 
 {% endblock %}
 

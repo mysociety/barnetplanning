@@ -5,9 +5,82 @@
 #map {
     float: right;
     border: solid 1px #999999;
+    margin-left: 1em;
 }
 
 #map div.olControlAttribution {
     text-align: right;
     bottom: 0.5em;
+}
+
+.ms-intro {
+    font-size: 14px; /* Barnet lhs margin text size */
+    margin-bottom: 2em;
+}
+
+.ms-form {
+    margin-right: 400px; /* allow for map on right */
+    padding: 0px;
+}
+.ms-form p {
+    margin: 0;
+    padding: 8px 8px;
+}
+
+.ms-form ul {
+    margin-left: 8px;
+}
+
+.ms-location {
+    border: 1px solid #34A3A4;  
+}
+
+.ms-form label{
+}
+
+#barnet_only_warning { 
+    margin-right: 400px; /* allow for map on right */
+}
+
+.ms-pc, .ms-ward{
+    padding:4px 0;
+    margin:0;
+}
+
+.ms-pc:hover, .ms-ward:hover {
+    background-color: #D8EBEB;
+}
+
+.ms-pc       { border-top: 1px dashed #D8EBEB;  }
+.ms-pc:hover { border-top: 1px solid #34A3A4;} 
+
+.ms-ward       { border-bottom: 1px dashed #D8EBEB; }
+.ms-ward:hover { border-bottom: 1px solid #34A3A4; }
+
+.ms-email {
+    margin-top: 1em;
+}
+input#create{
+    margin-left: 8px;
+}
+.ms-confirm{
+    background-image: url(/static/images/thumbs-up.png);
+}
+.ms-check-email{
+    background-image: url(/static/images/email.png);
+}
+.ms-confirm,.ms-check-email{
+    background-position: left center;
+    background-repeat: no-repeat; 
+    padding-left: 66px;
+    min-height: 60px;
+}
+.ms-breakout {
+    background-image: url(/static/images/exclaim.png);
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+    padding: 12px 12px 12px 80px;
+    background-color: #D8EBEB;
+    border: 1px solid #34A3A4;    
+    min-height: 60px;
 }
