@@ -1,6 +1,9 @@
 var map, boundary;
 
 $(function(){
+    $('.ms-form').css({'margin-right': '400px'});
+    $('#barnet_only_warning').css({'margin-right': '400px'});
+    
     $('#alert_form').before('<div id="map"></div>');
 
     // With javascript on, we can mention the map

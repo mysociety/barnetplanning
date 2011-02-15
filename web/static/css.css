@@ -19,7 +19,7 @@
 }
 
 .ms-form {
-    margin-right: 400px; /* allow for map on right */
+    /* js will add margin-right: 400px; to allow for the map */
     padding: 0px;
 }
 .ms-form p {
@@ -39,7 +39,7 @@
 }
 
 #barnet_only_warning { 
-    margin-right: 400px; /* allow for map on right */
+    /* js will add margin-right: 400px; to allow for the map */
 }
 
 .ms-pc, .ms-ward{
