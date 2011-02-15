@@ -94,13 +94,14 @@ $(function(){
 	var postcode = $('#id_postcode').val();
 	var ward_mapit_id = $('#id_ward_mapit_id').val();
 
+	hide_error('#id_ward_mapit_id');
 	hide_error('#id_postcode');
 	if ((!postcode) && (ward_mapit_id == -1)) {
-            show_error('#id_postcode', 'Please enter a postcode or a ward');
+            show_error('#id_ward_mapit_id', 'Please enter a postcode or a ward');
             go = false;
         };
 	if ((postcode) && (ward_mapit_id != -1)) {
-	    show_error('#id_postcode', 'You cannot enter both a postcode and a ward');
+	    show_error('#id_ward_mapit_id', 'You cannot enter both a postcode and a ward');
 	    go = false;
 	};
         return go;
@@ -127,7 +128,8 @@ function createCircle(c, radius) {
 /* does [almost] nothing, but we found having a button here improved the UX */
 function postcodeNop() {
     if (! $('#id_postcode').val()){
-        show_error('#id_postcode', 'Please enter a Barnet postcode')
+        hide_error('#id_postcode');
+        show_error('#id_postcode', 'Please enter a Barnet postcode');
     }
     return false;
 }
