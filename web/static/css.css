@@ -35,31 +35,52 @@
     border: 1px solid #34A3A4;  
 }
 
-.ms-form label{
-}
-
 #barnet_only_warning { 
     /* js will add margin-right: 400px; to allow for the map */
 }
 
-.ms-pc, .ms-ward{
+p.ms-or{
+    padding: 4px 8px;
+}
+
+.ms-pc, .ms-ward {
     padding:4px 0;
     margin:0;
 }
+.ms-pc p, ms-ward p {
+    padding: 4px 8px;
+    margin: 0;
+}
 
+.ms-pc p {
+    font-size: 1.126em;
+}
 .ms-pc:hover, .ms-ward:hover {
     background-color: #D8EBEB;
 }
 
-.ms-pc       { border-top: 1px dashed #D8EBEB;  }
-.ms-pc:hover { border-top: 1px solid #34A3A4;} 
+.ms-pc       { border-bottom: 1px dashed #D8EBEB;  }
+.ms-pc:hover { border-bottom: 1px solid #34A3A4;} 
 
-.ms-ward       { border-bottom: 1px dashed #D8EBEB; }
-.ms-ward:hover { border-bottom: 1px solid #34A3A4; }
+.ms-ward       { border-top: 1px dashed #D8EBEB; }
+.ms-ward:hover { border-top: 1px solid #34A3A4; }
 
 .ms-email {
-    margin-top: 1em;
+    margin-top: 1.8em;
 }
+.ms-email p {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+#radius_pick ul {
+    margin: 0 0 1em 8px;
+}
+#radius_label {
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
 input#create{
     margin-left: 8px;
 }

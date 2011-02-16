@@ -11,20 +11,12 @@
     </div>
     
 
-    <p>Please pick a ward <strong>OR</strong> enter your postcode.</p>
+    <p>Please enter your postcode <strong>OR</strong> pick a ward.</p>
     <form method="post" action="/" id="alert_form">
         <div class="ms-form">
             {{ form.non_field_errors }}
 
             <div class="ms-location">
-
-                <div class="ms-ward">
-                    {{ form.ward_mapit_id.errors }}
-                    <p style="margin-top: 0.5em">{{ form.ward_mapit_id.label_tag }}: {{ form.ward_mapit_id }}</p>
-                </div>
-            
-                <p><strong>OR</strong></p>
-
 
                 <div class="ms-pc">
                     {{ form.postcode.errors }}
@@ -32,19 +24,25 @@
                         {{ form.postcode.label_tag }}: {{ form.postcode }}
                         <!-- 'do-nothing' interface button goes here -->
                     </p>
-
-                    <div id="radius_pick">
-                        <p id="radius_label">{{ form.radius.label_tag }}</p>
-                        {{ form.radius }}
-                    </div>
-
                 </div>
+            
+                <p class="ms-or"><strong>OR</strong></p>
+
+                <div class="ms-ward">
+                    {{ form.ward_mapit_id.errors }}
+                    <p style="margin-top: 0.5em">{{ form.ward_mapit_id.label_tag }}: {{ form.ward_mapit_id }}</p>
+                </div>
+
             </div>
             <div class="ms-email">
                 {{ form.email.errors }}
                 <p>{{ form.email.label_tag }}: {{ form.email }}</p>
             </div>
 
+            <div id="radius_pick">
+                <p id="radius_label">{{ form.radius.label_tag }}</p>
+                {{ form.radius }}
+            </div>
 
             <input type="submit" value="Create alert" id="create">
         </div>

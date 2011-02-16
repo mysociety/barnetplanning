@@ -6,11 +6,12 @@ $(function(){
     
     $('#alert_form').before('<div id="map"></div>');
 
+    enableRadio(false);
+    
     // With javascript on, we can mention the map
     $('#barnet_only_warning').html('Please note that you will only be alerted about planning applications made to Barnet (within the blue boundary on the map), not to other neighbouring authorities.');
-    $('#radius_label').html('How far around this postcode would you like to receive alerts for?');
-    $('#radius_pick').hide();
-    $('#ms-pc-form').append('<input type="button" onclick="postcodeNop()" value="show me" id="ms-nop-button"/>');
+    $('#radius_label').html('How far around your postcode would you like to receive alerts for?');
+    //$('#radius_pick').hide();
 
     if ($('#map').length) {
         map = new google.maps.Map(document.getElementById('map'), {
@@ -39,7 +40,8 @@ $(function(){
     $('#id_postcode').change(function(){
         var val = $(this).val();
         if (!val) {
-            $('#radius_pick').hide('fast');
+            enableRadio(false);
+            //$('#radius_pick').hide('fast');
         }
         $.ajax({
             url: 'http://mapit.mysociety.org/postcode/' + encodeURIComponent(val),
@@ -58,7 +60,7 @@ $(function(){
                     show_error('#id_postcode', "That postcode doesn't appear to be within Barnet, sorry.");
                     return;
                 }
-                $('#radius_pick').slideDown('slow');
+                enableRadio(true);
                 $('#id_ward_mapit_id').val(-1);
                 if (!map) return;
                 map.setCenter(new google.maps.LatLng(data['wgs84_lat'], data['wgs84_lon']));
@@ -98,13 +100,13 @@ $(function(){
 	var ward_mapit_id = $('#id_ward_mapit_id').val();
 
 	hide_error('#id_ward_mapit_id');
-	hide_error('#id_postcode');
+	// hide_error('#id_postcode');
 	if ((!postcode) && (ward_mapit_id == -1)) {
-            show_error('#id_ward_mapit_id', 'Please enter a postcode or a ward');
+            show_error('#id_postcode', 'Please enter a postcode or a ward');
             go = false;
         };
 	if ((postcode) && (ward_mapit_id != -1)) {
-	    show_error('#id_ward_mapit_id', 'You cannot enter both a postcode and a ward');
+	    show_error('#id_postcode', 'You cannot enter both a postcode and a ward');
 	    go = false;
 	};
         return go;
@@ -128,13 +130,13 @@ function createCircle(c, radius) {
     }
 }
 
-/* does [almost] nothing, but we found having a button here improved the UX */
-function postcodeNop() {
-    if (! $('#id_postcode').val()){
-        hide_error('#id_postcode');
-        show_error('#id_postcode', 'Please enter a Barnet postcode');
+function enableRadio(wantEnable) {
+    if (! wantEnable){
+        $('#radius_pick').hide();
+    } else {
+        $('#radius_pick').show();        
     }
-    return false;
+    //$("#radius_pick input:radio").attr('disabled', ! wantEnable);
 }
 
 function show_error(id, text) {
