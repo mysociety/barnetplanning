@@ -177,7 +177,7 @@ class AcolnetParser:
 
         #self.feed(just_body)
         
-        soup = BeautifulSoup(just_body)
+        soup = BeautifulSoup(just_body, convertEntities=BeautifulSoup.ALL_ENTITIES)
 
         # Each app is in a table of it's own.
         results_tables = self._getResultsSections(soup)
