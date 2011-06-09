@@ -7,6 +7,7 @@
 # $Id: crontab.ugly,v 1.7 2010-05-25 14:26:08 louise Exp $
 
 PATH=/usr/local/bin:/usr/bin:/bin
+MAILTO=sysadmin@mysociety.org
 
 3 6 * * * !!(*= $user *)!! /data/vhost/!!(*= $vhost *)!!/barnetplanning/bin/fetch
 13 6 * * * !!(*= $user *)!! /data/vhost/!!(*= $vhost *)!!/barnetplanning/bin/import
