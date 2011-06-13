@@ -24,5 +24,6 @@ define('OPTION_BARNETPLANNING_DB_PORT', null);
 
 define('OPTION_DJANGO_SECRET_KEY', '');
 define('OPTION_BUGS_EMAIL', '');
+define('OPTION_FROM_EMAIL', '');
 
 define('OPTION_BASE_URL', 'http://example.org');
