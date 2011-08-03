@@ -6,7 +6,5 @@ python-django-south
 python-beautifulsoup
 
 libgdal1-1.5.0
-postgresql-8.3
-postgresql-8.3-postgis
-postgresql-server-dev-8.3
-
+postgresql
+postgresql-8.4-postgis | postgresql-8.3-postgis
