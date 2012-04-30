@@ -107,3 +107,10 @@ input#create{
     border: 1px solid #34A3A4;    
     min-height: 60px;
 }
+
+#alert_form {
+    margin-bottom: 1.5em;
+}
+#content #alert_form label {
+    display: inline-block;
+}
