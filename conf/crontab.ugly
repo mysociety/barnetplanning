@@ -7,7 +7,7 @@
 # $Id: crontab.ugly,v 1.7 2010-05-25 14:26:08 louise Exp $
 
 PATH=/usr/local/bin:/usr/bin:/bin
-!!(* if ($vhost eq 'duncan.barnetplanning.mysociety.org') { *)!!
+!!(* if ($staging) { *)!!
 MAILTO=!!(*= $user *)!!@mysociety.org
 !!(* } else { *)!!
 MAILTO=sysadmin@mysociety.org
