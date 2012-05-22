@@ -19,8 +19,8 @@ $(function(){
             center: new google.maps.LatLng(51.61, -0.22),
             mapTypeId: google.maps.MapTypeId.ROADMAP
         });
-        // Must be absolute URL, switch to live /static/2489.kml when deployed.
-        boundary = new google.maps.KmlLayer('http://fury.ukcod.org.uk/~matthew/2489.kml', {
+        // Must be absolute URL
+        boundary = new google.maps.KmlLayer('http://planning.barnet.mysociety.org/static/2489.kml', {
             preserveViewport: true,
             suppressInfoWindows: true
         });
