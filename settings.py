@@ -30,10 +30,10 @@ MANAGERS = ADMINS
 DATABASES = {
     default: {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': mysociety.config.get('BARNETPLANNING_DB_NAME')             # Or path to database file if using sqlite3.
-        'USER': mysociety.config.get('BARNETPLANNING_DB_USER')            # Not used with sqlite3.
-        'PASSWORD': mysociety.config.get('BARNETPLANNING_DB_PASS')          # Not used with sqlite3.
-        'HOST': mysociety.config.get('BARNETPLANNING_DB_HOST')              # Set to empty string for localhost. Not used with sqlite3.
+        'NAME': mysociety.config.get('BARNETPLANNING_DB_NAME'),            # Or path to database file if using sqlite3.
+        'USER': mysociety.config.get('BARNETPLANNING_DB_USER'),           # Not used with sqlite3.
+        'PASSWORD': mysociety.config.get('BARNETPLANNING_DB_PASS'),         # Not used with sqlite3.
+        'HOST': mysociety.config.get('BARNETPLANNING_DB_HOST'),             # Set to empty string for localhost. Not used with sqlite3.
         'PORT': mysociety.config.get('BARNETPLANNING_DB_PORT')              # Set to empty string for default. Not used with sqlite3.
     }
 }
