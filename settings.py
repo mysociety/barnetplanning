@@ -28,7 +28,7 @@ DEFAULT_FROM_EMAIL = 'Barnet Planning Alerts <%s>' % mysociety.config.get('FROM_
 MANAGERS = ADMINS
 
 DATABASES = {
-    default: {
+    'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': mysociety.config.get('BARNETPLANNING_DB_NAME'),            # Or path to database file if using sqlite3.
         'USER': mysociety.config.get('BARNETPLANNING_DB_USER'),           # Not used with sqlite3.
