@@ -27,12 +27,16 @@ DEFAULT_FROM_EMAIL = 'Barnet Planning Alerts <%s>' % mysociety.config.get('FROM_
 
 MANAGERS = ADMINS
 
-DATABASE_ENGINE = 'postgresql_psycopg2'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-DATABASE_NAME = mysociety.config.get('BARNETPLANNING_DB_NAME')             # Or path to database file if using sqlite3.
-DATABASE_USER = mysociety.config.get('BARNETPLANNING_DB_USER')            # Not used with sqlite3.
-DATABASE_PASSWORD = mysociety.config.get('BARNETPLANNING_DB_PASS')          # Not used with sqlite3.
-DATABASE_HOST = mysociety.config.get('BARNETPLANNING_DB_HOST')              # Set to empty string for localhost. Not used with sqlite3.
-DATABASE_PORT = mysociety.config.get('BARNETPLANNING_DB_PORT')              # Set to empty string for default. Not used with sqlite3.
+DATABASES = {
+    default: {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': mysociety.config.get('BARNETPLANNING_DB_NAME')             # Or path to database file if using sqlite3.
+        'USER': mysociety.config.get('BARNETPLANNING_DB_USER')            # Not used with sqlite3.
+        'PASSWORD': mysociety.config.get('BARNETPLANNING_DB_PASS')          # Not used with sqlite3.
+        'HOST': mysociety.config.get('BARNETPLANNING_DB_HOST')              # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': mysociety.config.get('BARNETPLANNING_DB_PORT')              # Set to empty string for default. Not used with sqlite3.
+    }
+}
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
