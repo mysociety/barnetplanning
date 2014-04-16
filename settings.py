@@ -29,7 +29,7 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': mysociety.config.get('BARNETPLANNING_DB_NAME'),            # Or path to database file if using sqlite3.
         'USER': mysociety.config.get('BARNETPLANNING_DB_USER'),           # Not used with sqlite3.
         'PASSWORD': mysociety.config.get('BARNETPLANNING_DB_PASS'),         # Not used with sqlite3.
